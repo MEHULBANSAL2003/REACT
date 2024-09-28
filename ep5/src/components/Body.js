@@ -5,6 +5,7 @@ import Shimmer  from "./Shimmer";
 const Body = () => {
    
     let [listOfRestraunts,setListOfRestaurants]=useState([]);
+    const [searchText,setSearchText]=useState("");
 
     useEffect(()=>{
         console.log("hello");
@@ -19,15 +20,20 @@ const Body = () => {
       setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     }
 
-    // conditional rendering
-    // if(listOfRestraunts.length===0){
-    //   return <Shimmer/>
-    // }
-    
 
     return listOfRestraunts.length===0? <Shimmer/>:(
       <div className="body">
         <div className="filter">
+
+          <div className="search">
+            <input type="text" className="search-box" value={searchText} onChange={(e)=>{
+                  
+                  setSearchText(e.target.value);
+            }} />
+            <button onClick={()=>{
+                  console.log(searchText);
+            }}>Search</button>
+          </div>
 
             <button className="filter-btn" onClick={()=>{
                const newData=listOfRestraunts.filter((res)=>{
