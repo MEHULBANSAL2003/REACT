@@ -8,7 +8,7 @@ const Header = () => {
 
     //let btnName="logout";
     let [btnName,setbtnName]=useState("login");
-  
+    
     return (
       <div className="header">
         <div className="logo-container">
@@ -32,6 +32,7 @@ const Header = () => {
             <li>
               Cart</li>
             <button className="login" onClick={()=>{
+
               btnName==="login"?setbtnName("logout"):setbtnName("login");
             }}>{btnName}</button>
           </ul>
