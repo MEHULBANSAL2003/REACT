@@ -7,10 +7,12 @@ const Body = () => {
   let [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  const [currStatus,setCurrStatus]=useState("Top rated restaurant");
+
   useEffect(() => {
     console.log("hello");
     fetchData();
-  }, []);
+  },[]);
 
   const fetchData = async () => {
     const data = await fetch(
@@ -58,13 +60,24 @@ const Body = () => {
         <button
           className="filter-btn"
           onClick={() => {
+            if(currStatus==="Top rated restaurant"){
+              setCurrStatus("all restuarants");
             const newData = listOfRestraunts.filter((res) => {
               return res.info.avgRating > 4.5;
             });
             setFilteredRestaurant(newData);
+          }
+          else{
+            setCurrStatus("Top rated restaurant");
+
+            fetchData();
+              
+            
+          }
+         
           }}
         >
-          Top rated Restaurants
+          {currStatus}
         </button>
       </div>
 
