@@ -51,10 +51,13 @@ const RestaurantMenu = () => {
               {title && <h3>{title}</h3>}
               {items ? (
                 items.map((item) => (
-                  <p key={item.card.info.id}>{item.card.info.name}</p>
+                  <p key={item.card.info.id}>
+                  {item.card.info.name} - (Rs. {item.card.info.defaultPrice ? item.card.info.defaultPrice / 100 : item.card.info.price / 100})
+                </p>
+                
                 ))
               ) : (
-                <p>No items available</p>
+                <p></p>
               )}
               <hr />
             </div>
