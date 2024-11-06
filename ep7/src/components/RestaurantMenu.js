@@ -43,7 +43,7 @@ const RestaurantMenu = () => {
       <h2>Menu</h2>
       
       {reqData && reqData.length > 2 ? (
-        reqData.slice(2).map((card, index) => {
+        reqData.map((card, index) => {
           const title = card?.card?.card?.title;
           const items = card?.card?.card?.itemCards;
           return (
