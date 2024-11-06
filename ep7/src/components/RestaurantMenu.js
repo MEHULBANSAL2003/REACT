@@ -16,6 +16,7 @@ const RestaurantMenu = () => {
   fetchMenu = async () => {
     const data = await fetch(MENU_URL + resId);
     const json = await data.json();
+    console.log(resId);
 
     setResInfo(json.data);
   };
@@ -26,8 +27,8 @@ const RestaurantMenu = () => {
   const { name, costForTwoMessage, avgRating, cuisines } =
     resInfo?.cards[2]?.card?.card?.info;
 
-  const { itemCards } =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
+  const reqData =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
   return (
     <div className="menu">
@@ -40,17 +41,28 @@ const RestaurantMenu = () => {
       <h4>{avgRating} stars</h4>
 
       <h2>Menu</h2>
-
-      <ul>
-        {itemCards.map((item) => {
+      
+      {reqData && reqData.length > 2 ? (
+        reqData.slice(2).map((card, index) => {
+          const title = card?.card?.card?.title;
+          const items = card?.card?.card?.itemCards;
           return (
-            <li key={item.card.info.id}>
-              {item.card.info.name} - Rs.
-              {item.card.info.defaultPrice / 100 || item.card.info.price / 100}
-            </li>
+            <div key={index}>
+              {title && <h3>{title}</h3>}
+              {items ? (
+                items.map((item) => (
+                  <p key={item.card.info.id}>{item.card.info.name}</p>
+                ))
+              ) : (
+                <p>No items available</p>
+              )}
+              <hr />
+            </div>
           );
-        })}
-      </ul>
+        })
+      ) : (
+        <p>No menu data available</p>
+      )}
     </div>
   );
 };
