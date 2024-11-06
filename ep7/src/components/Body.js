@@ -12,15 +12,12 @@ const Body = () => {
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
 
   useEffect(() => {
-    console.log("hello");
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const data = await fetch(RES_URL);
     const json = await data.json();
-
-    console.log(json);
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
