@@ -4,10 +4,14 @@ import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import { MENU_URL } from "../utils/constants";
+import useRestaurant from "../utils/useRestaurant";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
+  
   const { resId } = useParams();
+  const [resInfo, setResInfo] = useState(null);
+
+  const restaurants= useRestaurant(resId);
 
   useEffect(() => {
     fetchMenu();
