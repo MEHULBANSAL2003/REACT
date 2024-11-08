@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RES_URL } from "../utils/constants";
+import { filter_res } from "../utils/helper";
 
 const Body = () => {
   let [listOfRestraunts, setListOfRestaurants] = useState([]);
@@ -42,12 +43,9 @@ const Body = () => {
           />
           <button
             onClick={() => {
-              let filtred_res = listOfRestraunts.filter((res) => {
-                return res.info.name
-                  .toLowerCase()
-                  .includes(searchText.toLowerCase());
-              });
-              setFilteredRestaurant(filtred_res);
+              let filtered_res=filter_res(searchText,listOfRestraunts);
+             // console.log(filtered_res);
+              setFilteredRestaurant(filtered_res);
             }}
           >
             Search
