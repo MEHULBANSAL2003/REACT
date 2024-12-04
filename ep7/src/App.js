@@ -10,8 +10,8 @@ import Error from "./components/Error.js";
 import RestaurantMenu from "./components/RestaurantMenu.js";
 import Shimmer from "./components/Shimmer.js";
 
+let Instamart=lazy(()=> import("./components/Instamart.js"));
 
-const Instamart=lazy(()=> import("./components/Instamart.js"));
 
 
 const AppLayout = () => {
