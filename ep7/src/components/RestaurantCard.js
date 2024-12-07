@@ -1,27 +1,28 @@
 import { CDN_URL } from "../utils/constants";
 
 const RestaurantCard = (props) => {
-    const {resData}=props;
-    const {cloudinaryImageId,name,cuisines,avgRating,costForTwo,sla}=resData?.info;
+  const { resData } = props;
+  const { cloudinaryImageId, name, cuisines, avgRating, costForTwo, sla } = resData?.info;
 
-    const styleCard = {
-        backgroundColor: "#f0f0f0",
-      };
-      
   return (
-    
-    <div className="res-card" style={styleCard}>
+    <div className="max-w-xs bg-white rounded-lg shadow-lg overflow-hidden m-4">
       <img
-        className="res-logo"
+        className="w-full h-48 object-cover"
         alt="res-logo"
-        src={CDN_URL+cloudinaryImageId}
+        src={CDN_URL + cloudinaryImageId}
       />
-      <h3>{name}</h3>
-      <h4>{cuisines.join(", ")}</h4>
-      <h4>{avgRating} stars</h4>
-      <h4>{costForTwo}</h4>
-      <h4>{sla.deliveryTime} min</h4>
-      
+      <div className="p-4">
+        <h3 className="text-xl font-semibold text-gray-800 truncate">{name}</h3>
+        <h4 className="text-sm text-gray-600">{cuisines.join(", ")}</h4>
+        <div className="flex items-center mt-2">
+          <span className="text-yellow-500 font-bold">{avgRating}</span>
+          <span className="text-gray-500 ml-1">★</span>
+        </div>
+        <div className="mt-2">
+          <p className="text-sm text-gray-600">Cost for two: {costForTwo}</p>
+          <p className="text-sm text-gray-600">Delivery Time: {sla.deliveryTime} min</p>
+        </div>
+      </div>
     </div>
   );
 };

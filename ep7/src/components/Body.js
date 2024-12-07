@@ -2,7 +2,6 @@ import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { RES_URL } from "../utils/constants";
 import { filter_res } from "../utils/helper";
 import useOnline from "../utils/useOnline";
 
@@ -60,9 +59,16 @@ const Body = () => {
 
   const online=useOnline();
 
-  if(!online){
-    return <h1>Offline, please check your internet connection!!</h1>
+  if (!online) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-red-100">
+        <h1 className="text-2xl font-bold text-red-600">
+          Offline, please check your internet connection!!
+        </h1>
+      </div>
+    );
   }
+  
 
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
@@ -107,13 +113,17 @@ const Body = () => {
   </button>
 </div>
 
-      <div className="res-container">
-        {filteredRestaurant.map((restaurant) => {
-          return (
-          <Link  key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}> <RestaurantCard resData={restaurant} /> </Link>
-          );
-        })}
-      </div>
+<div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+  {filteredRestaurant.map((restaurant) => {
+    return (
+      <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+        <RestaurantCard resData={restaurant} />
+      </Link>
+    );
+  })}
+</div>
+
+
     </>
   );
 };
