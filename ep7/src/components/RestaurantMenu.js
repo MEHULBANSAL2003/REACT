@@ -22,7 +22,7 @@ const RestaurantMenu = () => {
 
   return (
     <div className="menu">
-      <h1>{name}</h1>
+      <h1 className="font-bold">{name}</h1>
 
       <p>
         {cuisines.join(",")} -{costForTwoMessage}
@@ -30,7 +30,7 @@ const RestaurantMenu = () => {
 
       <h4>{avgRating} stars</h4>
 
-      <h2>Menu</h2>
+      <h2 className="font-bold">Menu</h2>
       
       {reqData && reqData.length > 2 ? (
         reqData.map((card, index) => {
@@ -38,7 +38,7 @@ const RestaurantMenu = () => {
           const items = card?.card?.card?.itemCards;
           return (
             <div key={index}>
-              {title && <h3>{title}</h3>}
+              {title && <h3 className="font-bold text-lg">{title}</h3>}
               {items ? (
                 items.map((item) => (
                   <p key={item.card.info.id}>
