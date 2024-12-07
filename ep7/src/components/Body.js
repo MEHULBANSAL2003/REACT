@@ -67,47 +67,45 @@ const Body = () => {
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            className="search-box"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-          />
-          <button
-            onClick={() => {
-              let filtered_res=filter_res(searchText,listOfRestraunts);
-             // console.log(filtered_res);
-              setFilteredRestaurant(filtered_res);
-            }}
-          >
-            Search
-          </button>
-        </div>
+    <>
+      <div className="flex justify-center p-5 bg-orange-500 rounded-lg  items-center">
+  <input
+    type="text"
+    className="border-2 border-gray-300 rounded-l-md px-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-orange-500"
+    value={searchText}
+    onChange={(e) => {
+      setSearchText(e.target.value);
+    }}
+    placeholder="Search restaurants..."
+  />
+  <button
+    className="bg-orange-600 text-white font-bold rounded-r-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+    onClick={() => {
+      let filtered_res = filter_res(searchText, listOfRestraunts);
+      setFilteredRestaurant(filtered_res);
+    }}
+  >
+    Search
+  </button>
 
-        <button
-          className="filter-btn"
-          onClick={() => {
-            if (currStatus === "Top rated restaurant") {
-              setCurrStatus("all restuarants");
-              const newData = listOfRestraunts.filter((res) => {
-                return res.info.avgRating > 4.3;
-              });
-              setFilteredRestaurant(newData);
-            } else {
-              setCurrStatus("Top rated restaurant");
-
-              fetchData();
-            }
-          }}
-        >
-          {currStatus}
-        </button>
-      </div>
+  <button
+    className="bg-orange-600 text-white font-bold rounded-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+    onClick={() => {
+      if (currStatus === "Top rated restaurant") {
+        setCurrStatus("All restaurants");
+        const newData = listOfRestraunts.filter((res) => {
+          return res.info.avgRating > 4.3;
+        });
+        setFilteredRestaurant(newData);
+      } else {
+        setCurrStatus("Top rated restaurant");
+        fetchData();
+      }
+    }}
+  >
+    {currStatus}
+  </button>
+</div>
 
       <div className="res-container">
         {filteredRestaurant.map((restaurant) => {
@@ -116,7 +114,7 @@ const Body = () => {
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 

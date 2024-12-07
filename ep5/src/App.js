@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState,useEffect}from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header.js"
 import Body from "./components/Body.js";
@@ -9,13 +9,26 @@ import Body from "./components/Body.js";
 
 
 
-const AppLayout = () => {
-  return (
-    <div className="app">
-      <Header />
 
-      <Body />
-    </div>
+const AppLayout = () => {
+
+  const [c,setC]=useState(0);
+
+  useEffect(()=>{
+    setInterval(()=>{
+      console.log(c);
+      setC(c+1);
+
+    },1000);
+    setC(c+1);
+  },[]);
+
+  return (
+    // <div className="app">
+    //   <Header />
+   <div>{c}</div>
+    //   <Body />
+    // </div>
   );
 };
 
