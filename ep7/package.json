@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/MEHULBANSAL2003/REACT#readme",
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
     "parcel": "^2.12.0",
-    "process": "^0.11.10"
+    "postcss": "^8.4.49",
+    "process": "^0.11.10",
+    "tailwindcss": "^3.4.16"
   },
   "dependencies": {
     "react": "^18.3.1",
