@@ -10,15 +10,40 @@ const Body = () => {
   let [listOfRestraunts, setListOfRestaurants] = useState([]);
   let [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState("");
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
 
   useEffect(() => {
     fetchData();
+  }, [location]);
+  useEffect(() => {
+    fetchLocation();
   }, []);
 
+  const fetchLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (err) => {
+          setError("Location permission denied. Please enable location services.");
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by your browser.");
+    }
+  };
+
   const fetchData = async () => {
-    const data = await fetch(RES_URL);
+    if(location){
+      try{
+    const data = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.latitude}&lng=${location.longitude}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
     const json = await data.json();
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -26,6 +51,11 @@ const Body = () => {
     setFilteredRestaurant(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+      }
+      catch(err){
+        setError("Failed to fetch restaurant data. Please try again.");
+      }
+    }
   };
 
   const online=useOnline();
