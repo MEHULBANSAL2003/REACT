@@ -6,5 +6,8 @@ export const MENU_URL="https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MEN
 
 export const RES_URL="https://www.swiggy.com/dapi/restaurants/list/v5?lat=30.76648186047635&lng=76.78531226911772&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
 
+export const MAP_TOKEN="pk.eyJ1IjoibWJhbnNhbDIwMDMiLCJhIjoiY200ZzFtbjV2MTdhMzJrcXFnaGF2dWJ0aiJ9.zzZsWYMOz3dmRpBIAwmiMg";
 
-  
+
+
+

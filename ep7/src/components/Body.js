@@ -1,62 +1,58 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import { filter_res } from "../utils/helper";
 import useOnline from "../utils/useOnline";
 
 const Body = () => {
+
   let [listOfRestraunts, setListOfRestaurants] = useState([]);
   let [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [location, setLocation] = useState(null);
+  const location = useLocation();
+  const { latitude, longitude } = location.state || {};
   const [error, setError] = useState("");
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
-
+ 
   useEffect(() => {
     fetchData();
-  }, [location]);
-  useEffect(() => {
-    fetchLocation();
   }, []);
+ 
+  const fetchData = async () => {   
+    if (latitude && longitude) {
+        try {
+            // Fetch restaurant data
+            const response = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${latitude}&lng=${longitude}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
 
-  const fetchLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-        },
-        (err) => {
-          setError("Location permission denied. Please enable location services.");
+            // Check if the response is okay (status 200)
+            if (!response.ok) {
+                throw new Error('Failed to fetch restaurants. Please try again later.');
+            }
+
+            // Parse the JSON data
+            const json = await response.json();
+
+            // Check if restaurants data is available
+            const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+
+            if (restaurants && restaurants.length > 0) {
+                setListOfRestaurants(restaurants);
+                setFilteredRestaurant(restaurants);
+            } else {
+                throw new Error('No restaurants found for this location.');
+            }
+
+        } catch (error) {
+            // Handle any errors (network issues, unserviceable location, etc.)
+            setError(error.message);
+            console.error('Error fetching data:', error.message );
+            
         }
-      );
-    } else {
-      setError("Geolocation is not supported by your browser.");
     }
-  };
+};
 
-  const fetchData = async () => {
-    if(location){
-      try{
-    const data = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${location.latitude}&lng=${location.longitude}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
-    const json = await data.json();
-
-    setListOfRestaurants(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurant(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-      }
-      catch(err){
-        setError("Failed to fetch restaurant data. Please try again.");
-      }
-    }
-  };
 
   const online=useOnline();
 
@@ -69,11 +65,30 @@ const Body = () => {
       </div>
     );
   }
-  
 
-  return listOfRestraunts.length === 0 ? (
-    <Shimmer />
-  ) : (
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-100">
+        <div className="bg-white text-gray-800 rounded-xl p-6 w-4/5 max-w-md text-center shadow-lg border border-gray-300">
+          <h2 className="text-2xl font-semibold mb-4 text-orange-500">Oops! Something went wrong</h2>
+          <p className="text-base mb-6 text-gray-600">{error}</p>
+          <button
+            onClick={() => fetchData}
+            className="bg-orange-500 text-white font-semibold rounded-lg px-8 py-3 w-full hover:bg-orange-700 focus:outline-none transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+  
+ 
+  
+  if (  listOfRestraunts.length === 0) {
+    return <Shimmer />;
+  }
+  return (
     <>
       <div className="flex justify-center p-5 bg-orange-500   items-center">
   <input

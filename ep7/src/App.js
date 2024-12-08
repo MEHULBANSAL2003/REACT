@@ -9,6 +9,7 @@ import Profile from "./components/Profile.js";
 import Error from "./components/Error.js";
 import RestaurantMenu from "./components/RestaurantMenu.js";
 import Shimmer from "./components/Shimmer.js";
+import Location from "./components/Location.js";
 
 let Instamart=lazy(()=> import("./components/Instamart.js"));
 
@@ -17,7 +18,7 @@ let Instamart=lazy(()=> import("./components/Instamart.js"));
 const AppLayout = () => {
   return (
     <div className="app">
-      <Header />
+      <Header/>
       <Outlet/>
     </div>
   );
@@ -32,9 +33,14 @@ const appRouter=createBrowserRouter([
 
     {
       path:"/",
-      element:<Body/>,
+      element:<Location/>
       // errorElement:<Error/>
       },
+      {
+        path:"/home",
+        element:<Body/>,
+        // errorElement:<Error/>
+        },
 
     {
       path:"/about",

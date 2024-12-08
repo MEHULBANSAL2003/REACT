@@ -29,7 +29,7 @@ const Header = () => {
         <div className="nav-items">
           <ul className="flex py-8 ">
             <li className="px-2 font-bold text-white">
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
               </li>
             <li className="px-2 font-bold text-white">
               <Link to="/about">About Us</Link>
