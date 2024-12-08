@@ -10,9 +10,16 @@ const Section = ({ title, description }) => {
   return (
     <div className="border border-black p-2 m-2">
       <h3 className="font-bold text-xl">{title}</h3>
+      {isVisible?
+      <button className="cursor-pointer underline" onClick={handleOnClick}>
+        Hide
+      </button>
+      :
       <button className="cursor-pointer underline" onClick={handleOnClick}>
         Show
       </button>
+
+}
       {isVisible && <p>{description}</p>}
     </div>
   );
