@@ -18,7 +18,7 @@ let Instamart=lazy(()=> import("./components/Instamart.js"));
 const AppLayout = () => {
   return (
     <div className="app">
-      <Header/>
+      <Header />
       <Outlet/>
     </div>
   );
@@ -33,7 +33,7 @@ const appRouter=createBrowserRouter([
 
     {
       path:"/",
-      element:<Location/>
+      element:<Body/>,
       // errorElement:<Error/>
       },
       {
