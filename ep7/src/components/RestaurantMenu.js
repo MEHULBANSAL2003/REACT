@@ -66,6 +66,7 @@ const RestaurantMenu = () => {
                     const price = item.card.info.defaultPrice
                       ? item.card.info.defaultPrice / 100
                       : item.card.info.price / 100;
+                      const isVeg=item.card.info.isVeg?1:0;
                     return (
                       <div
                         key={item.card.info.id}
@@ -75,7 +76,7 @@ const RestaurantMenu = () => {
                           <img
                             className="w-4 h-4"
                             src={
-                              item.card.info.isVeg
+                              isVeg
                                 ? vegIcon // Path to the veg image
                                 : nonVegIcon // Path to the non-veg image
                             }
