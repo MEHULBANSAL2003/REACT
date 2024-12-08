@@ -113,7 +113,7 @@ const Body = () => {
   </button>
 </div>
 
-<div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+<div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
   {filteredRestaurant.map((restaurant) => {
     return (
       <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
