@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
+import userContext from "../utils/UserContext";
  
 
 
@@ -11,6 +12,9 @@ const Header = () => {
     let [btnName,setbtnName]=useState("Sign in");
 
     const isOnline=useOnline();
+
+    const {user}=useContext(userContext);
+    console.log(user);
    
     
     return (
@@ -40,8 +44,10 @@ const Header = () => {
               </li >
 
               <li className="px-2 ">{isOnline?"✅":"❌"}</li>
+              
+               <h1 className="p-2 font-bold text-white">{user.name}</h1>
 
-            <button className="border-4 border-black rounded-md text-white bg-black px-2"nClick={()=>{
+            <button className="border-4 border-black rounded-md text-white bg-black px-2" onClick={()=>{
 
               btnName==="Sign in"?setbtnName("Logout"):setbtnName("Sign in");
             }}>{btnName}</button>
@@ -49,6 +55,6 @@ const Header = () => {
         </div>
       </div>
     );
-  };
+  };  
 
   export default Header;
