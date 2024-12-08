@@ -74,7 +74,7 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div className="flex justify-center p-5 bg-orange-500 rounded-lg  items-center">
+      <div className="flex justify-center p-5 bg-orange-500   items-center">
   <input
     type="text"
     className="border-2 border-gray-300 rounded-l-md px-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-orange-500"
