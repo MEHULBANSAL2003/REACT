@@ -5,13 +5,15 @@ import { useParams } from "react-router-dom";
 import useRestaurant from "../utils/useRestaurant";
 import vegIcon from "../utils/veg_svg.png"; // Adjust the file extension if it's PNG or SVG
 import nonVegIcon from "../utils/Non_veg_svg.png";
+import { filteredMenu } from "../utils/helper.js";
 
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurant(resId);
   const [visibleMenus, setVisibleMenus] = useState({}); // State to track visibility for each menu category
-
+  const [searchText, setSearchText] = useState("");
+  const [filterMenu,setFilteredMenu]=useState(null);
   if (resInfo === null) {
     return <Shimmer />;
   }
@@ -26,6 +28,9 @@ const RestaurantMenu = () => {
   const { name, costForTwoMessage, avgRating, cuisines } =
     resInfo?.cards[2]?.card?.card?.info;
   const reqData = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  
+
+
 
   return (
     <div className="menu p-5 bg-white text-gray-900">
@@ -40,6 +45,34 @@ const RestaurantMenu = () => {
       <div className="flex justify-center items-center mb-4">
         <h2 className="font-bold text-2xl">Menu</h2>
       </div>
+
+      <div className="flex items-center w-full max-w-md bg-gray-100 rounded-full shadow-md border border-gray-300 p-1">
+      <input
+        type="text"
+        value={searchText}
+        onChange={(e) => {
+         setSearchText(e.target.value);
+    }}
+        placeholder="Search for dishes"
+        className="flex-grow px-4 py-1 bg-transparent text-gray-700 text-sm outline-none rounded-full"
+      />
+      <button className="flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 transition">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4 text-gray-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11 4a7 7 0 017 7m-7-7a7 7 0 00-7 7m14 0a7 7 0 01-7 7m0-14a7 7 0 00-7 7m13.656 10.344l-3.157-3.157"
+          />
+        </svg>
+      </button>
+    </div>
 
       {reqData && reqData.length > 0 ? (
         reqData.map((card, index) => {
