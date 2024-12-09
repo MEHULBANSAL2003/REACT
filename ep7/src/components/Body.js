@@ -15,7 +15,7 @@ const Body = () => {
   const [error, setError] = useState("");
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
- 
+
   useEffect(() => {
     fetchData();
   }, []);
