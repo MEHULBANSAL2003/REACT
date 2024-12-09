@@ -42,18 +42,18 @@ const Location = () => {
   // Handle form submission for manual location
   const handleLocationSubmit = async (e) => {
     e.preventDefault();
-    let location=inputValue.trim();
+    let loc=inputValue.trim();
     if (location === "") {
       setError("Please enter a valid location.");
       return;
     }
-    console.log(location);
-    let currCoordinates=await fetchCoordinates(location);
+    
+    let currCoordinates=await fetchCoordinates(loc);
      let [longitude,latitude]=currCoordinates;
     console.log(currCoordinates);
     
 
-   navigate("/home", { state: {latitude,longitude} });
+   navigate("/home", { state: {latitude,longitude,loc} });
   };
 
   return (

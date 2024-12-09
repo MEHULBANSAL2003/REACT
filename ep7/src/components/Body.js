@@ -11,7 +11,7 @@ const Body = () => {
   let [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
   const location = useLocation();
-  const { latitude, longitude } = location.state || {};
+  const { latitude, longitude,loc } = location.state || {};
   const [error, setError] = useState("");
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
@@ -90,57 +90,65 @@ const Body = () => {
   }
   return (
     <>
-      <div className="flex justify-center p-5 bg-orange-500   items-center">
-  <input
-    type="text"
-    className="border-2 border-gray-300 rounded-l-md px-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-orange-500"
-    value={searchText}
-    onChange={(e) => {
-      setSearchText(e.target.value);
-    }}
-    placeholder="Search restaurants..."
-  />
-  <button
-    className="bg-orange-600 text-white font-bold rounded-r-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
-    onClick={() => {
-      let filtered_res = filter_res(searchText, listOfRestraunts);
-      setFilteredRestaurant(filtered_res);
-    }}
-  >
-    Search
-  </button>
-
-  <button
-    className="bg-orange-600 text-white font-bold rounded-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
-    onClick={() => {
-      if (currStatus === "Top rated restaurant") {
-        setCurrStatus("All restaurants");
-        const newData = listOfRestraunts.filter((res) => {
-          return res.info.avgRating > 4.3;
-        });
-        setFilteredRestaurant(newData);
-      } else {
-        setCurrStatus("Top rated restaurant");
-        fetchData();
-      }
-    }}
-  >
-    {currStatus}
-  </button>
-</div>
-
-<div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
-  {filteredRestaurant.map((restaurant) => {
-    return (
-      <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
-        <RestaurantCard resData={restaurant} />
-      </Link>
-    );
-  })}
-</div>
-
-
-    </>
+    <div className="flex justify-between p-5 bg-orange-500 items-center">
+      {/* Location Styled and Positioned to the Left */}
+      <h1
+        className="text-white text-2xl font-bold px-4 py-2 border-2 border-white rounded-md shadow-md"
+      >
+        {loc}
+      </h1>
+  
+      {/* Center Content: Search Bar and Buttons */}
+      <div className="flex flex-grow justify-center items-center">
+        <input
+          type="text"
+          className="border-2 border-gray-300 rounded-l-md px-4 py-2 w-72 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+          placeholder="Search restaurants..."
+        />
+        <button
+          className="bg-orange-600 text-white font-bold rounded-r-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          onClick={() => {
+            let filtered_res = filter_res(searchText, listOfRestraunts);
+            setFilteredRestaurant(filtered_res);
+          }}
+        >
+          Search
+        </button>
+        <button
+          className="bg-orange-600 text-white font-bold rounded-md px-6 py-2 ml-2 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          onClick={() => {
+            if (currStatus === "Top rated restaurant") {
+              setCurrStatus("All restaurants");
+              const newData = listOfRestraunts.filter((res) => {
+                return res.info.avgRating > 4.3;
+              });
+              setFilteredRestaurant(newData);
+            } else {
+              setCurrStatus("Top rated restaurant");
+              fetchData();
+            }
+          }}
+        >
+          {currStatus}
+        </button>
+      </div>
+    </div>
+  
+    <div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
+      {filteredRestaurant.map((restaurant) => {
+        return (
+          <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+            <RestaurantCard resData={restaurant} />
+          </Link>
+        );
+      })}
+    </div>
+  </>
+  
   );
 };
 
