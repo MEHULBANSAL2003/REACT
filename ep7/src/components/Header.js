@@ -1,8 +1,9 @@
-import { useState,useContext } from "react";
+import { useState,useContext, use } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
 import userContext from "../utils/UserContext";
+import { UseSelector, useSelector } from "react-redux";
  
 
 
@@ -14,7 +15,9 @@ const Header = () => {
     const isOnline=useOnline();
 
     const {user}=useContext(userContext);
-    console.log(user);
+   
+    const cartItems=useSelector((store)=> store.cart.items);
+    console.log(cartItems);
    
     
     return (
@@ -37,8 +40,7 @@ const Header = () => {
             <li className="px-2 font-bold text-white">
               <Link to="/contact">Contact</Link>
               </li>
-            <li className="px-2 font-bold text-white">
-              Cart</li>
+            <li className="px-2 font-bold text-white"> Cart({cartItems.length})</li>
               <li className="px-2 font-bold text-white">
               <Link to="/instamart">Instamart</Link>
               </li >
