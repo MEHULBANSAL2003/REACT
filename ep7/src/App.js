@@ -10,6 +10,7 @@ import Error from "./components/Error.js";
 import RestaurantMenu from "./components/RestaurantMenu.js";
 import Shimmer from "./components/Shimmer.js";
 import Location from "./components/Location.js";
+import { Provider } from "react-redux";
 
 let Instamart=lazy(()=> import("./components/Instamart.js"));
 
@@ -18,8 +19,10 @@ let Instamart=lazy(()=> import("./components/Instamart.js"));
 const AppLayout = () => {
   return (
     <div className="app">
+      <Provider>
       <Header />
       <Outlet/>
+      </Provider>
     </div>
   );
 };
