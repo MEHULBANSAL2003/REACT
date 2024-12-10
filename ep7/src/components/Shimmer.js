@@ -1,30 +1,28 @@
- const Shimmer=()=>{
-    return (
+const Shimmer = () => {
+  return (
+    <div className="flex flex-wrap">
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+      <div className="m-5 w-60 h-96 bg-gray-200 animate-pulse"></div>
+    </div>
+  );
+};
 
-        <div className="shimmer-container">
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-            <div className="shimmer-cards"></div>
-        </div>
-    )
- }
-
- export default Shimmer; 
-
+export default Shimmer;

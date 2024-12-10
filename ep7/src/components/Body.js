@@ -73,22 +73,26 @@ const Body = () => {
           <h2 className="text-2xl font-semibold mb-4 text-orange-500">Oops! Something went wrong</h2>
           <p className="text-base mb-6 text-gray-600">{error}</p>
           <button
-            onClick={() => fetchData}
-            className="bg-orange-500 text-white font-semibold rounded-lg px-8 py-3 w-full hover:bg-orange-700 focus:outline-none transition-colors"
-          >
-            Retry
-          </button>
+  onClick={() => {
+    setError(""); // Reset error before retrying
+    fetchData(); // Ensure fetchData is executed
+  }}
+  className="bg-orange-500 text-white font-semibold rounded-lg px-8 py-3 w-full hover:bg-orange-700 focus:outline-none transition-colors"
+>
+  Retry
+</button>
+
         </div>
       </div>
     );
   }
   
  
-  
-  if (  listOfRestraunts.length === 0) {
-    return <Shimmer />;
-  }
-  return (
+console.log(listOfRestraunts.length); 
+
+ return listOfRestraunts.length==0 ?  (<Shimmer/>
+ ):
+   (
     <>
     <div className="flex justify-between p-5 bg-orange-500 items-center">
       {/* Location Styled and Positioned to the Left */}
