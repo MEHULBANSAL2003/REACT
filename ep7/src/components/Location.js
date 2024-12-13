@@ -19,7 +19,7 @@ const Location = () => {
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
           setError("");
-          console.log(latitude,longitude);
+          
 
           dispatch(setUserLocation({latitude,longitude}));
             

@@ -20,7 +20,7 @@ const Body = () => {
       longitude=74.9371392;
 
     }
-    console.log(latitude,longitude);
+  
     
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
