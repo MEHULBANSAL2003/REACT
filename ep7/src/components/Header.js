@@ -3,7 +3,7 @@ import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
 import userContext from "../utils/UserContext";
-import { UseSelector, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
  
 
 
@@ -17,7 +17,7 @@ const Header = () => {
     const {user}=useContext(userContext);
    
     const cartItems=useSelector((store)=> store.cart.items);
-    console.log(cartItems);
+    
    
     
     return (
@@ -40,7 +40,8 @@ const Header = () => {
             <li className="px-2 font-bold text-white">
               <Link to="/contact">Contact</Link>
               </li>
-            <li className="px-2 font-bold text-white"> Cart({cartItems.length})</li>
+            <li className="px-2 font-bold text-white"> 
+            <Link to="/cart">Cart({cartItems.length})</Link></li>
               <li className="px-2 font-bold text-white">
               <Link to="/instamart">Instamart</Link>
               </li >

@@ -12,6 +12,7 @@ import Shimmer from "./components/Shimmer.js";
 import Location from "./components/Location.js";
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore.js";
+import Cart from "./components/Cart.js";
 
 let Instamart = lazy(() => import("./components/Instamart.js"));
 
@@ -69,6 +70,10 @@ const appRouter = createBrowserRouter([
             <Instamart />
           </Suspense>
         ),
+      },
+      {
+        path: "/cart",
+        element: <Cart/>
       },
     ],
     errorElement: <Error />,

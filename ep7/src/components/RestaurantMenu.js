@@ -23,8 +23,8 @@ const RestaurantMenu = () => {
 
     const handleOnClick=(item)=>{
       //dispatch an action
-      console.log(item.card.info.name);
-      dispatch(addItem(item.card.info.name));
+      
+      dispatch(addItem(item));
     }
 
   const toggleMenuVisibility = (index) => {
