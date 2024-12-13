@@ -1,12 +1,15 @@
 import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MAP_TOKEN } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { setUserLocation } from '../redux/locationSlice';
 
 const Location = () => {
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch=useDispatch();
 
   // Function to get user's current location
   const getCurrentLocation = () => {
@@ -16,8 +19,11 @@ const Location = () => {
           const { latitude, longitude } = position.coords;
           setLocation({ latitude, longitude });
           setError("");
+          console.log(latitude,longitude);
+
+          dispatch(setUserLocation({latitude,longitude}));
             
-         navigate("/home", { state: { latitude, longitude } });
+         navigate("/home");
         },
         (err) => {
           setError("Unable to fetch location. Please allow location access.");
@@ -39,6 +45,7 @@ const Location = () => {
       return currCoordinates;
 }
 
+
   // Handle form submission for manual location
   const handleLocationSubmit = async (e) => {
     e.preventDefault();
@@ -50,10 +57,10 @@ const Location = () => {
     
     let currCoordinates=await fetchCoordinates(loc);
      let [longitude,latitude]=currCoordinates;
-    console.log(currCoordinates);
     
-
-   navigate("/home", { state: {latitude,longitude,loc} });
+    
+    dispatch(setUserLocation({latitude,longitude}));
+   navigate("/home");
   };
 
   return (

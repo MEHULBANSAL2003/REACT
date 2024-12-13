@@ -1,18 +1,27 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import { Link,useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { filter_res } from "../utils/helper";
 import useOnline from "../utils/useOnline";
+import { useSelector } from "react-redux";
 
 const Body = () => {
 
   let [listOfRestraunts, setListOfRestaurants] = useState([]);
   let [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const location = useLocation();
-  const { latitude, longitude,loc } = location.state || {};
   const [error, setError] = useState("");
+
+    let {latitude,longitude}=useSelector((store)=>store.location);
+    
+    if(latitude==null && longitude==null){
+      latitude=30.2153728;
+      longitude=74.9371392;
+
+    }
+    console.log(latitude,longitude);
+    
 
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
 
@@ -21,8 +30,10 @@ const Body = () => {
   }, []);
  
   const fetchData = async () => {   
+   
     if (latitude && longitude) {
         try {
+       
             // Fetch restaurant data
             const response = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${latitude}&lng=${longitude}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
 
@@ -88,19 +99,13 @@ const Body = () => {
   }
   
  
-console.log(listOfRestraunts.length); 
 
  return listOfRestraunts.length==0 ?  (<Shimmer/>
  ):
    (
     <>
     <div className="flex justify-between p-5 bg-orange-500 items-center">
-      {/* Location Styled and Positioned to the Left */}
-      <h1
-        className="text-white text-2xl font-bold px-4 py-2 border-2 border-white rounded-md shadow-md"
-      >
-        {loc}
-      </h1>
+   
   
       {/* Center Content: Search Bar and Buttons */}
       <div className="flex flex-grow justify-center items-center">
