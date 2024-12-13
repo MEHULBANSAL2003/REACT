@@ -11,7 +11,10 @@ const Cart = () => {
   console.log(cartItems);
 
   const handleClearCart = () => {
-    dispatch(clearCart());
+    const confirmClear = window.confirm("Are you sure you want to clear the cart?");
+    if (confirmClear) {
+      dispatch(clearCart());
+    }
   };
 
   return (
