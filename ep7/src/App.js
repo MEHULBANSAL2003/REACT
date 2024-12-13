@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header.js";
 import Body from "./components/Body.js";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet ,useLocation} from "react-router-dom";
 import About from "./components/About.js";
 import Contact from "./components/Contact.js";
 import Profile from "./components/Profile.js";
@@ -14,14 +14,18 @@ import { Provider } from "react-redux";
 import appStore from "./redux/appStore.js";
 import Cart from "./components/Cart.js";
 
+
 let Instamart = lazy(() => import("./components/Instamart.js"));
 
 const AppLayout = () => {
+  const location = useLocation();
+  const isLocationPage = location.pathname === "/"; 
   return (
     <Provider store={appStore}>
       <div className="app">
-        <Header />
+      {!isLocationPage && <Header />}
         <Outlet />
+     
       </div>
     </Provider>
   );
