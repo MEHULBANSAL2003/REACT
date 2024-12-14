@@ -4,11 +4,23 @@ import { createSlice } from "@reduxjs/toolkit";
 const cartSlice=createSlice({
     name:"cart",
     initialState:{
-        items:[]
+        items:[],
     },
     reducers:{
         addItem:(state,action)=>{
-            state.items.push(action.payload);
+         if(state.items.length===0 || state.items[0].card.restroId===action.payload.card.restroId){
+                state.items.push(action.payload);
+         }
+        else{
+            const confirmClear = window.confirm("Items from different restaurant are already added.Are you sure you want to clear the cart?");
+            if(confirmClear){
+                state.items.length=0;
+                state.items.push(action.payload);
+            }
+
+        }
+       
+
         },
         removeItem:(state,action)=>{
             state.items.pop();

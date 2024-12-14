@@ -3,9 +3,8 @@ import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import useRestaurant from "../utils/useRestaurant";
-import vegIcon from "../utils/veg_svg.png"; // Adjust the file extension if it's PNG or SVG
+import vegIcon from "../utils/veg_svg.png"; 
 import nonVegIcon from "../utils/Non_veg_svg.png";
-import { filteredMenu } from "../utils/helper.js";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cartSlice.js";
 
@@ -14,16 +13,17 @@ const RestaurantMenu = () => {
   const resInfo = useRestaurant(resId);
   const [visibleMenus, setVisibleMenus] = useState({}); // State to track visibility for each menu category
   const [searchText, setSearchText] = useState("");
-  const [filterMenu, setFilteredMenu] = useState(null);
   const dispatch=useDispatch();
 
   if (resInfo === null) {
     return <Shimmer />;
     }
 
-    const handleOnClick=(item)=>{
+    const handleOnClick=(item,id)=>{
       //dispatch an action
       
+      item.card.restroId=id;
+     // console.log(item);
       dispatch(addItem(item));
     }
 
@@ -34,10 +34,10 @@ const RestaurantMenu = () => {
     }));
   };
 
-  const { name, costForTwoMessage, avgRating, cuisines } =
+  const { name, costForTwoMessage, avgRating, cuisines,id } =
     resInfo?.cards[2]?.card?.card?.info;
   const reqData = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-
+   
   return (
     <div className="menu p-5 bg-white text-gray-900">
       <div className="restaurant-info mb-6">
@@ -135,7 +135,7 @@ const RestaurantMenu = () => {
                               src={CDN_URL + imageId}
                             />
                           )}
-                          <button  onClick={()=>handleOnClick(item)} className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200">
+                          <button  onClick={()=>handleOnClick(item,id)} className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200">
                             ADD +
                           </button>
                         </div>
