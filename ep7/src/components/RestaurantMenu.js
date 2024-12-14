@@ -3,29 +3,37 @@ import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import useRestaurant from "../utils/useRestaurant";
-import vegIcon from "../utils/veg_svg.png"; 
+import vegIcon from "../utils/veg_svg.png";
 import nonVegIcon from "../utils/Non_veg_svg.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/cartSlice.js";
+import { UseSelector } from "react-redux";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurant(resId);
   const [visibleMenus, setVisibleMenus] = useState({}); // State to track visibility for each menu category
   const [searchText, setSearchText] = useState("");
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((store) => store.cart.items);
+  const [itemCounts, setItemCounts] = useState({});
 
   if (resInfo === null) {
     return <Shimmer />;
-    }
+  }
 
-    const handleOnClick=(item,id)=>{
-      //dispatch an action
-      
-      item.card.restroId=id;
-     // console.log(item);
-      dispatch(addItem(item));
-    }
+  const handleOnClick = (item, id) => {
+    //dispatch an action
+
+    item.card.restroId = id;
+    // console.log(item);
+    dispatch(addItem(item));
+
+    setItemCounts((prevCounts) => ({
+      ...prevCounts,
+      [item.card.info.id]: (prevCounts[item.card.info.id] || 0) + 1,
+    }));
+  };
 
   const toggleMenuVisibility = (index) => {
     setVisibleMenus((prevState) => ({
@@ -34,10 +42,10 @@ const RestaurantMenu = () => {
     }));
   };
 
-  const { name, costForTwoMessage, avgRating, cuisines,id } =
+  const { name, costForTwoMessage, avgRating, cuisines, id } =
     resInfo?.cards[2]?.card?.card?.info;
   const reqData = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-   
+
   return (
     <div className="menu p-5 bg-white text-gray-900">
       <div className="restaurant-info mb-6">
@@ -135,8 +143,13 @@ const RestaurantMenu = () => {
                               src={CDN_URL + imageId}
                             />
                           )}
-                          <button  onClick={()=>handleOnClick(item,id)} className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200">
-                            ADD +
+                          <button
+                            onClick={() => handleOnClick(item, id)}
+                            className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200"
+                          >
+                            {itemCounts[item.card.info.id]
+                              ? `${itemCounts[item.card.info.id]} +`
+                              : "ADD +"}
                           </button>
                         </div>
                       </div>
