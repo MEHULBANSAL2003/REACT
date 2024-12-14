@@ -15,14 +15,6 @@ const Body = () => {
 
     let {latitude,longitude}=useSelector((store)=>store.location);
     
-    if(latitude==null && longitude==null){
-      latitude=30.2153728;
-      longitude=74.9371392;
-
-    }
-  
-    
-
   const [currStatus, setCurrStatus] = useState("Top rated restaurant");
 
   useEffect(() => {

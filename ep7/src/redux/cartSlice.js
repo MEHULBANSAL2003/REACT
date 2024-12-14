@@ -22,9 +22,18 @@ const cartSlice=createSlice({
        
 
         },
-        removeItem:(state,action)=>{
-            state.items.pop();
-        },
+        removeItem: (state, action) => {
+            const menuId = action.payload.card.info.id;
+          
+            // Find the index of the first occurrence of the item
+            const index = state.items.findIndex((item) => item.card.info.id === menuId);
+          
+            // If an item with the given menuId is found, remove it
+            if (index !== -1) {
+              state.items.splice(index, 1); // Remove one item at the found index
+            }
+          },
+          
         clearCart:(state,action)=>{
             state.items.length=0;
         }

@@ -6,7 +6,7 @@ import useRestaurant from "../utils/useRestaurant";
 import vegIcon from "../utils/veg_svg.png";
 import nonVegIcon from "../utils/Non_veg_svg.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../redux/cartSlice.js";
+import { addItem,removeItem } from "../redux/cartSlice.js";
 import { UseSelector } from "react-redux";
 
 const RestaurantMenu = () => {
@@ -22,7 +22,17 @@ const RestaurantMenu = () => {
     return <Shimmer />;
   }
 
-  const handleOnClick = (item, id) => {
+  const handleDecrement=(item,id)=>{
+    
+    setItemCounts((prevCounts) => ({
+      ...prevCounts,
+      [item.card.info.id]: (prevCounts[item.card.info.id]) - 1,
+    }));
+          
+    dispatch(removeItem(item));
+  }
+
+  const handleIncrement= (item, id) => {
     //dispatch an action
 
     item.card.restroId = id;
@@ -143,14 +153,34 @@ const RestaurantMenu = () => {
                               src={CDN_URL + imageId}
                             />
                           )}
-                          <button
+                          {/* <button
                             onClick={() => handleOnClick(item, id)}
                             className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200"
                           >
                             {itemCounts[item.card.info.id]
                               ? `${itemCounts[item.card.info.id]} +`
                               : "ADD +"}
-                          </button>
+                          </button> */}
+                          <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center space-x-1 bg-white py-1 rounded-md shadow-lg">
+                            {itemCounts[item.card.info.id]>0&&<button
+                              onClick={() => handleDecrement(item, id)}
+                              className=" text-green-600  w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                            >
+                              -
+                            </button>
+                  }
+                            <p className="text-green-600 font-bold text-md">
+                              {itemCounts[item.card.info.id] || "ADD"}
+                            </p>
+                            
+                            <button
+                              onClick={() => handleIncrement(item, id)}
+                              className=" text-green-600 text-xl font-bold w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                            >
+                              +
+                            </button>
+                  
+                          </div>
                         </div>
                       </div>
                     );
