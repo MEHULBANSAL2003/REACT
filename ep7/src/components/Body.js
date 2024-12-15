@@ -39,6 +39,8 @@ const Body = () => {
 
             // Check if restaurants data is available
             const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+           
+            
 
             if (restaurants && restaurants.length > 0) {
                 setListOfRestaurants(restaurants);
@@ -55,6 +57,7 @@ const Body = () => {
         }
     }
 };
+
 
 
   const online=useOnline();
@@ -91,6 +94,7 @@ const Body = () => {
   }
   
  
+  
 
  return listOfRestraunts.length==0 ?  (<Shimmer/>
  ):
@@ -138,7 +142,6 @@ const Body = () => {
         </button>
       </div>
     </div>
-  
     <div className="res-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
       {filteredRestaurant.map((restaurant) => {
         return (

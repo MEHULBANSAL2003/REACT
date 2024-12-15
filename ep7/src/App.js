@@ -11,7 +11,8 @@ import RestaurantMenu from "./components/RestaurantMenu.js";
 import Shimmer from "./components/Shimmer.js";
 import Location from "./components/Location.js";
 import { Provider } from "react-redux";
-import appStore from "./redux/appStore.js";
+import { PersistGate } from 'redux-persist/integration/react';
+import {appStore,persistor} from "./redux/appStore.js";
 import Cart from "./components/Cart.js";
 
 
@@ -22,11 +23,13 @@ const AppLayout = () => {
   const isLocationPage = location.pathname === "/"; 
   return (
     <Provider store={appStore}>
+       <PersistGate loading={null} persistor={persistor}>
       <div className="app">
       {!isLocationPage && <Header />}
         <Outlet />
      
       </div>
+      </PersistGate>
     </Provider>
   );
 };
