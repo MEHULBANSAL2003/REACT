@@ -6,7 +6,7 @@ import useRestaurant from "../utils/useRestaurant";
 import vegIcon from "../utils/veg_svg.png";
 import nonVegIcon from "../utils/Non_veg_svg.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem,removeItem } from "../redux/cartSlice.js";
+import { addItem, removeItem } from "../redux/cartSlice.js";
 import { UseSelector } from "react-redux";
 
 const RestaurantMenu = () => {
@@ -22,17 +22,16 @@ const RestaurantMenu = () => {
     return <Shimmer />;
   }
 
-  const handleDecrement=(item,id)=>{
-    
+  const handleDecrement = (item, id) => {
     setItemCounts((prevCounts) => ({
       ...prevCounts,
-      [item.card.info.id]: (prevCounts[item.card.info.id]) - 1,
+      [item.card.info.id]: prevCounts[item.card.info.id] - 1,
     }));
-          
-    dispatch(removeItem(item));
-  }
 
-  const handleIncrement= (item, id) => {
+    dispatch(removeItem(item));
+  };
+
+  const handleIncrement = (item, id) => {
     //dispatch an action
 
     item.card.restroId = id;
@@ -102,21 +101,25 @@ const RestaurantMenu = () => {
         reqData.map((card, index) => {
           const title = card?.card?.card?.title;
           const items = card?.card?.card?.itemCards;
+          const categories = card?.card?.card?.categories;
+
           return (
             <div key={index} className="menu-category mb-6">
-              {title && (
+              {/* Render main title with toggle */}
+              {title && (items || categories) && (
                 <div
                   className="flex justify-between items-center cursor-pointer py-2 px-4 hover:bg-gray-200 rounded-md transition"
-                  onClick={() => toggleMenuVisibility(index)}
+                  onClick={() => toggleMenuVisibility(`title-${index}`)}
                 >
                   <h3 className="font-bold text-xl">{title}</h3>
                   <div className="text-lg text-gray-900">
-                    {visibleMenus[index] ? "▲" : "▼"}
+                    {!categories && (visibleMenus[`title-${index}`] ? "▲" : "▼")}
                   </div>
                 </div>
               )}
 
-              {visibleMenus[index] && items && (
+              {/* Render direct items */}
+              {visibleMenus[`title-${index}`] && items && (
                 <div className="menu-items space-y-4 mt-4">
                   {items.map((item) => {
                     const imageId = item.card.info.imageId;
@@ -124,6 +127,7 @@ const RestaurantMenu = () => {
                       ? item.card.info.defaultPrice / 100
                       : item.card.info.price / 100;
                     const isVeg = item.card.info.isVeg ? 1 : 0;
+
                     return (
                       <div
                         key={item.card.info.id}
@@ -132,11 +136,7 @@ const RestaurantMenu = () => {
                         <div className="item-details flex-1 mr-4">
                           <img
                             className="w-4 h-4"
-                            src={
-                              isVeg
-                                ? vegIcon // Path to the veg image
-                                : nonVegIcon // Path to the non-veg image
-                            }
+                            src={isVeg ? vegIcon : nonVegIcon}
                             alt={item.card.info.isVeg ? "Veg" : "Non-Veg"}
                           />
                           <p className="text-lg font-semibold">
@@ -144,52 +144,95 @@ const RestaurantMenu = () => {
                           </p>
                           <p className="text-gray-600 text-sm">₹{price}</p>
                         </div>
-
-                        <div className="relative w-28 h-32">
-                          {imageId && (
-                            <img
-                              className="w-full h-full object-cover rounded-lg"
-                              alt="item"
-                              src={CDN_URL + imageId}
-                            />
-                          )}
-                          {/* <button
-                            onClick={() => handleOnClick(item, id)}
-                            className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 w-20 bg-white text-green-600 text-md font-bold py-1 rounded-md shadow-lg hover:bg-gray-200"
-                          >
-                            {itemCounts[item.card.info.id]
-                              ? `${itemCounts[item.card.info.id]} +`
-                              : "ADD +"}
-                          </button> */}
-                          <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center space-x-1 bg-white py-1 rounded-md shadow-lg">
-                            {itemCounts[item.card.info.id]>0&&<button
-                              onClick={() => handleDecrement(item, id)}
-                              className=" text-green-600  w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
-                            >
-                              -
-                            </button>
-                  }
-                            <p className="text-green-600 font-bold text-md">
-                              {itemCounts[item.card.info.id] || "ADD"}
-                            </p>
-                            
-                            <button
-                              onClick={() => handleIncrement(item, id)}
-                              className=" text-green-600 text-xl font-bold w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
-                            >
-                              +
-                            </button>
-                  
-                          </div>
-                        </div>
+                        {imageId && (
+                          <img
+                            className="w-28 h-32 object-cover rounded-lg"
+                            src={CDN_URL + imageId}
+                            alt="item"
+                          />
+                        )}
                       </div>
                     );
                   })}
                 </div>
               )}
+
+              {/* Render categorized items */}
+              {categories && (
+                <div className="categories mt-4 space-y-6">
+                  {categories.map((category, catIndex) => (
+                    <div key={catIndex} className="category">
+                      {/* Render category title with toggle */}
+                      <div
+                        className="flex justify-between items-center cursor-pointer py-2 px-4 hover:bg-gray-200 rounded-md transition"
+                        onClick={() =>
+                          toggleMenuVisibility(`category-${index}-${catIndex}`)
+                        }
+                      >
+                        <h4 className="font-bold text-md">{category.title}</h4>
+                        <div className="text-lg text-gray-900">
+                          {visibleMenus[`category-${index}-${catIndex}`]
+                            ? "▲"
+                            : "▼"}
+                        </div>
+                      </div>
+
+                      {/* Render category items */}
+                      {visibleMenus[`category-${index}-${catIndex}`] && (
+                        <div className="category-items mt-2 space-y-4">
+                          {category.itemCards.map((item) => {
+                            const imageId = item.card.info.imageId;
+                            const price = item.card.info.defaultPrice
+                              ? item.card.info.defaultPrice / 100
+                              : item.card.info.price / 100;
+                            const isVeg = item.card.info.isVeg ? 1 : 0;
+
+                            return (
+                              <div
+                                key={item.card.info.id}
+                                className="menu-item flex items-center justify-between py-4 border-b border-gray-200"
+                              >
+                                <div className="item-details flex-1 mr-4">
+                                  <img
+                                    className="w-4 h-4"
+                                    src={isVeg ? vegIcon : nonVegIcon}
+                                    alt={
+                                      item.card.info.isVeg ? "Veg" : "Non-Veg"
+                                    }
+                                  />
+                                  <p className="text-lg font-semibold">
+                                    {item.card.info.name}
+                                  </p>
+                                  <p className="text-gray-600 text-sm">
+                                    ₹{price}
+                                  </p>
+                                </div>
+                                {imageId && (
+                                  <img
+                                    className="w-28 h-32 object-cover rounded-lg"
+                                    src={CDN_URL + imageId}
+                                    alt="item"
+                                  />
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                
+              )}
+              
+              {title && <div class="border-t-8 border-gray-200 my-4"></div>}
+
+              
             </div>
           );
+         
         })
+        
       ) : (
         <p className="text-center text-gray-600">No menu data available</p>
       )}
