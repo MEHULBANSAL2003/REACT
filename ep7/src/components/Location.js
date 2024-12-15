@@ -23,7 +23,7 @@ const Location = () => {
 
           dispatch(setUserLocation({latitude,longitude}));
             
-         navigate("/home");
+         navigate("/restaurants");
         },
         (err) => {
           setError("Unable to fetch location. Please allow location access.");
@@ -60,7 +60,7 @@ const Location = () => {
     
     
     dispatch(setUserLocation({latitude,longitude}));
-   navigate("/home");
+   navigate("/restaurants");
   };
 
   return (
