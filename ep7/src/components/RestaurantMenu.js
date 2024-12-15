@@ -113,7 +113,8 @@ const RestaurantMenu = () => {
                 >
                   <h3 className="font-bold text-xl">{title}</h3>
                   <div className="text-lg text-gray-900">
-                    {!categories && (visibleMenus[`title-${index}`] ? "▲" : "▼")}
+                    {!categories &&
+                      (visibleMenus[`title-${index}`] ? "▲" : "▼")}
                   </div>
                 </div>
               )}
@@ -145,11 +146,32 @@ const RestaurantMenu = () => {
                           <p className="text-gray-600 text-sm">₹{price}</p>
                         </div>
                         {imageId && (
-                          <img
-                            className="w-28 h-32 object-cover rounded-lg"
-                            src={CDN_URL + imageId}
-                            alt="item"
-                          />
+                          <div className="relative w-28 h-32">
+                            <img
+                              className="w-full h-full object-cover rounded-lg"
+                              src={CDN_URL + imageId}
+                              alt="item"
+                            />
+                            <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center justify-center space-x-1 bg-white py-1 rounded-md shadow-lg">
+                              {itemCounts[item.card.info.id] > 0 && (
+                                <button
+                                  onClick={() => handleDecrement(item, id)}
+                                  className="text-green-600 w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                                >
+                                  -
+                                </button>
+                              )}
+                              <p className="text-green-600 font-bold text-md text-center">
+                                {itemCounts[item.card.info.id] || "ADD"}
+                              </p>
+                              <button
+                                onClick={() => handleIncrement(item, id)}
+                                className="text-green-600 text-xl font-bold w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
                         )}
                       </div>
                     );
@@ -208,11 +230,36 @@ const RestaurantMenu = () => {
                                   </p>
                                 </div>
                                 {imageId && (
-                                  <img
-                                    className="w-28 h-32 object-cover rounded-lg"
-                                    src={CDN_URL + imageId}
-                                    alt="item"
-                                  />
+                                  <div className="relative w-28 h-32">
+                                    <img
+                                      className="w-full h-full object-cover rounded-lg"
+                                      src={CDN_URL + imageId}
+                                      alt="item"
+                                    />
+                                    <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center justify-center space-x-1 bg-white py-1 rounded-md shadow-lg">
+                                      {itemCounts[item.card.info.id] > 0 && (
+                                        <button
+                                          onClick={() =>
+                                            handleDecrement(item, id)
+                                          }
+                                          className="text-green-600 w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                                        >
+                                          -
+                                        </button>
+                                      )}
+                                      <p className="text-green-600 font-bold text-md text-center">
+                                        {itemCounts[item.card.info.id] || "ADD"}
+                                      </p>
+                                      <button
+                                        onClick={() =>
+                                          handleIncrement(item, id)
+                                        }
+                                        className="text-green-600 text-xl font-bold w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </div>
                                 )}
                               </div>
                             );
@@ -222,17 +269,12 @@ const RestaurantMenu = () => {
                     </div>
                   ))}
                 </div>
-                
               )}
-              
-              {title && <div class="border-t-8 border-gray-200 my-4"></div>}
 
-              
+              {title && <div class="border-t-8 border-gray-200 my-4"></div>}
             </div>
           );
-         
         })
-        
       ) : (
         <p className="text-center text-gray-600">No menu data available</p>
       )}
