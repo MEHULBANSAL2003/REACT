@@ -102,6 +102,7 @@ const RestaurantMenu = () => {
           const title = card?.card?.card?.title;
           const items = card?.card?.card?.itemCards;
           const categories = card?.card?.card?.categories;
+          console.log(items);
 
           return (
             <div key={index} className="menu-category mb-6">
@@ -111,7 +112,7 @@ const RestaurantMenu = () => {
                   className="flex justify-between items-center cursor-pointer py-2 px-4 hover:bg-gray-200 rounded-md transition"
                   onClick={() => toggleMenuVisibility(`title-${index}`)}
                 >
-                  <h3 className="font-bold text-xl">{title}</h3>
+                  <h3 className="font-bold text-xl">{title}{items && `(${items.length})`}</h3>
                   <div className="text-lg text-gray-900">
                     {!categories &&
                       (visibleMenus[`title-${index}`] ? "▲" : "▼")}
@@ -191,7 +192,7 @@ const RestaurantMenu = () => {
                           toggleMenuVisibility(`category-${index}-${catIndex}`)
                         }
                       >
-                        <h4 className="font-bold text-md">{category.title}</h4>
+                        <h4 className="font-bold text-md">{category.title}{category.itemCards&& `(${category.itemCards.length})`}</h4>
                         <div className="text-lg text-gray-900">
                           {visibleMenus[`category-${index}-${catIndex}`]
                             ? "▲"
