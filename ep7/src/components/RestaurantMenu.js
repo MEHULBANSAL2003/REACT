@@ -102,8 +102,6 @@ const RestaurantMenu = () => {
           const title = card?.card?.card?.title;
           const items = card?.card?.card?.itemCards;
           const categories = card?.card?.card?.categories;
-          console.log(items);
-
           return (
             <div key={index} className="menu-category mb-6">
               {/* Render main title with toggle */}
@@ -146,12 +144,12 @@ const RestaurantMenu = () => {
                           </p>
                           <p className="text-gray-600 text-sm">₹{price}</p>
                         </div>
-                        {imageId && (
+                         
                           <div className="relative w-28 h-32">
                             <img
                               className="w-full h-full object-cover rounded-lg"
                               src={CDN_URL + imageId}
-                              alt="item"
+                              
                             />
                             <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center justify-center space-x-1 bg-white py-1 rounded-md shadow-lg">
                               {itemCounts[item.card.info.id] > 0 && (
@@ -173,7 +171,7 @@ const RestaurantMenu = () => {
                               </button>
                             </div>
                           </div>
-                        )}
+                        
                       </div>
                     );
                   })}
@@ -230,7 +228,7 @@ const RestaurantMenu = () => {
                                     ₹{price}
                                   </p>
                                 </div>
-                                {imageId && (
+                              
                                   <div className="relative w-28 h-32">
                                     <img
                                       className="w-full h-full object-cover rounded-lg"
@@ -261,7 +259,7 @@ const RestaurantMenu = () => {
                                       </button>
                                     </div>
                                   </div>
-                                )}
+                                
                               </div>
                             );
                           })}

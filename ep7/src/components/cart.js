@@ -8,7 +8,17 @@ import nonVegIcon from "../utils/Non_veg_svg.png";
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
   const dispatch = useDispatch();
-  console.log(cartItems);
+  //console.log(cartItems);
+
+  const cartItemsMap=new Map();
+ 
+  cartItems.forEach((item)=>{
+    cartItemsMap.set(item,(cartItemsMap.get(item)||0)+1);
+  })
+
+  cartItemsMap.forEach((count,item)=>{
+    console.log(`${item}: ${count}`);
+  })
 
   const handleClearCart = () => {
     const confirmClear = window.confirm("Are you sure you want to clear the cart?");
@@ -35,12 +45,15 @@ const Cart = () => {
             </button>
 
             <div className="space-y-6">
-              {cartItems.map((item) => {
-                const imageId = item.card.info.imageId;
-                const price = item.card.info.defaultPrice
-                  ? item.card.info.defaultPrice / 100
-                  : item.card.info.price / 100;
-                const isVeg = item.card.info.isVeg ? 1 : 0;
+              {Array.from(cartItemsMap).map(([item, count]) => {
+                console.log(item);
+                const imageId = item?.card?.info?.imageId;
+               
+                const price = item?.card?.info?.defaultPrice
+                  ? item?.card?.info?.defaultPrice / 100
+                  : item?.card?.info?.price / 100;
+                const isVeg = item?.card?.info?.isVeg ? 1 : 0;
+                
 
                 return (
                   <div
@@ -62,13 +75,34 @@ const Cart = () => {
                     </div>
 
                     <div className="relative">
-                      {imageId && (
-                        <img
-                          className="w-28 h-28 object-cover rounded-md"
-                          alt="item"
-                          src={CDN_URL + imageId}
-                        />
-                      )}
+                     
+                                  <div className="relative w-28 h-32">
+                                    <img
+                                      className="w-full h-full object-cover rounded-lg"
+                                      src={CDN_URL + imageId}
+                                      alt="item"
+                                    />
+                                    <div className="absolute bottom-[-12px] left-1/2 transform -translate-x-1/2 flex items-center justify-center space-x-1 bg-white py-1 rounded-md shadow-lg">
+                                      
+                                        <button
+                                         
+                                          className="text-green-600 w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                                        >
+                                          -
+                                        </button>
+                                      
+                                      <p className="text-green-600 font-bold text-md text-center">
+                                        {count}
+                                      </p>
+                                      <button
+                                       
+                                        className="text-green-600 text-xl font-bold w-8 h-8 rounded-md flex items-center justify-center hover:bg-gray-300"
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </div>
+                                
                      
                     </div>
                   </div>
